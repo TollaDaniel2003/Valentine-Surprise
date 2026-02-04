@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise Valentine</title>
+    <style>
+body {
+margin: 0;
+font-family: Arial, sans-serif;
+background: linear-gradient(135deg, #d16ba5, #ff758c);
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh;
+overflow: hidden;
+}
+.card {
+background: white;
+padding: 40px;
+border-radius: 15px;
+text-align: center;
+box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+width: 320px;
+position: relative;
+}
+h1 {
+margin-bottom: 20px;
+}
+input {
+padding: 10px;
+width: 80%;
+border-radius: 8px;
+border: 2px solid #ff758c;
+outline: none;
+margin-bottom: 15px;
+}
+button {
+padding: 10px 20px;
+border-radius: 8px;
+border: none;
+cursor: pointer;
+font-size: 16px;
+transition: 0.3s;
+}
+.primary, .yes-btn {
+background-color: #ff4e78;
+color: white;
+}
+.primary:hover, .yes-btn:hover {
+background-color: #ff2e63;
+}
+.no-btn {
+background-color: #eee;
+position: absolute;
+}
+.hidden {
+display: none;
+}
+    </style>
+</head>
+<body>
+
+<div id="step1" class="card">
+    <h1>Surprise !!! 😊</h1>
+    <p>C'est parti !</p>
+    <input type="text" id="nameInput" placeholder="Entre ton prénom 😊">
+    <br>
+    <button class="primary" onclick="goToStep2()">Oui 😍</button>
+</div>
+
+<div id="step2" class="hidden card">
+    <h1 id="questionText"></h1>
+    <button id="yesBtn" class="yes-btn" onclick="sayYes()">Oui 😍</button>
+    <button id="noBtn" class="no-btn" onclick="moveNoButton()">Non 😏</button>
+</div>
+
+<div id="step3" class="hidden card">
+    <h1>Yeeeees !!! 💖🥰</h1>
+    <p>Je suis trop content !!!</p>
+    <p>Sache que je t'aime énormément</p>
+</div>
+
+<script>
+function goToStep2() {
+const name = document.getElementById("nameInput").value.trim();
+if (name === "") return alert("Entre un prénom 😊");
+document.getElementById("step1").classList.add("hidden");
+document.getElementById("step2").classList.remove("hidden");
+document.getElementById("questionText").innerText = name + ", veux-tu être ma Valentine ? 🥺👉👈";
+// Position initiale du bouton Non
+const noBtn = document.getElementById("noBtn");
+noBtn.style.left = "60%";
+noBtn.style.top = "60%";
+}
+
+function sayYes() {
+document.getElementById("step2").classList.add("hidden");
+document.getElementById("step3").classList.remove("hidden");
+}
+
+let moveCount = 0;
+function moveNoButton() {
+moveCount++;
+const positions = [
+  {left: '10%', top: '10%'},
+  {left: '80%', top: '20%'},
+  {left: '20%', top: '80%'},
+  {left: '70%', top: '50%'},
+  {left: '40%', top: '10%'}
+];
+const pos = positions[moveCount % positions.length];
+document.getElementById('noBtn').style.left = pos.left;
+document.getElementById('noBtn').style.top = pos.top;
+if (moveCount === 10) {
+  document.getElementById('noBtn').innerText = '😏';
+  document.getElementById('noBtn').onclick = sayYes;
+}
+}
+</script>
+</body>
+</html>
